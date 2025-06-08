@@ -32,6 +32,8 @@ specialInstructions = input("Any special instructions for delivery? (If not, sim
 # print("Special instructions: ", specialInstructions) 
 
 # Menu: 2 options available, item and price
+print("Please select from the following menu:\n1. Chicken Alfredo ($18)\n2. Spaghetti and Garlic Bread ($16.50)")
+menuChoice = int(input())
 # How many?
 
 # Print order confirmation, require Y/N in a loop (sanitize this input)
