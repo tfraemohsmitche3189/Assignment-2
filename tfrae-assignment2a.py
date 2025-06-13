@@ -37,21 +37,22 @@ specialInstructions = input("Any special instructions for delivery? (If not, sim
 # Menu: 2 options available, item and price
 menuChoice = 3
 menuOrder = ""
+menuPrice = 0
 totalPrice = 0
 while menuChoice > 2:
     menuChoice = int(input("Please select from the following menu:\n1. Chicken Alfredo ($18)\n2. Spaghetti and Garlic Bread ($16.50) "))
     if menuChoice == 1:
         menuOrder = "Chicken Alfredo"
-        totalPrice = float(18)
+        menuPrice = float(18)
     elif menuChoice == 2:
         menuOrder = "Spaghetti and Garlic Bread"
-        totalPrice = 16.5
+        menuPrice = 16.5
     else:
         print("I'm sorry, that is an invalid input. Please answer 1 or 2.")
 
 # How many?
 menuAmount = int(input("How many orders would you like? "))
-totalPrice = totalPrice * menuAmount
+totalPrice = menuPrice * menuAmount
 
 # Print order confirmation, require Y/N in a loop (sanitize this input)
 userConfirm = input("You would like {0} orders of {1}? ".format(menuAmount, menuOrder)).upper()
@@ -66,14 +67,19 @@ while userStudent != "Y" and userStudent != "N":
     print("Invalid input.")
     userStudent = input("Are you a student? ").upper()
 
-# You know this is kind of a bad discount. It doesn't even cover the sales tax. Who greenlit this?
+# Print recipt including: Food ordered, quantity, price, student discount if applicable, sales tax
+# This took longer than the entire rest of the assignment combined
+print("{0:^20s} {1:^20s} {2:^20s} {3:^20s}".format('Order', 'Amt', 'Price', 'Total'))
+print("{0:_^80s}".format('_'))
+print("{0:^20s} {1:^20d} {2:^20.2f} {3:^20.2f}".format(menuOrder, menuAmount, menuPrice, totalPrice))
+# You know, this is kind of a bad discount. It doesn't even cover the sales tax. Who greenlit this?
 studentDiscount = 1.0
 if userStudent == "Y":
     studentDiscount = totalPrice * .1
     totalPrice = totalPrice - studentDiscount
-
-# Add sales tax 13%
+    print("{0:^20s} {1:^20s} {2:^20.2%} {3:^20.2f}".format('Student Discount', ' ', studentDiscount * .01, totalPrice))
+# Add sales tax 13%. Yes it's absurd that I multiply something by .01 in order to format it as a % but this is what works 
+# and I'm afraid of fiddling with it more and breaking everything
 salesTax = totalPrice * .13
 totalPrice = totalPrice + salesTax
-
-# Print recipt including: Food ordered, quantity, price, student discount if applicable, sales tax
+print("{0:^20s} {1:^20s} {2:^20.2%} {3:^20.2f}".format('Sales Tax', '', salesTax * .01, totalPrice))
