@@ -4,6 +4,9 @@
 # Last edited: 06-08-25
 
 # Display welcome screen here, explain how to use program
+from ast import While
+
+
 print("Welcome to Arnold's Amazing Eats!\nThis program is used to order from our menu quickly and easily. Simply enter your information at each prompt, or press the corresponding number when given a menu. You will have a chance to confirm your information at the end before ordering.")
 
 # Get the following information (Display prompts, recieve input). Don't sanitize these inputs.
@@ -32,14 +35,45 @@ specialInstructions = input("Any special instructions for delivery? (If not, sim
 # print("Special instructions: ", specialInstructions) 
 
 # Menu: 2 options available, item and price
-print("Please select from the following menu:\n1. Chicken Alfredo ($18)\n2. Spaghetti and Garlic Bread ($16.50)")
-menuChoice = int(input())
+menuChoice = 3
+menuOrder = ""
+totalPrice = 0
+while menuChoice > 2:
+    menuChoice = int(input("Please select from the following menu:\n1. Chicken Alfredo ($18)\n2. Spaghetti and Garlic Bread ($16.50) "))
+    if menuChoice == 1:
+        menuOrder = "Chicken Alfredo"
+        totalPrice = float(18)
+    elif menuChoice == 2:
+        menuOrder = "Spaghetti and Garlic Bread"
+        totalPrice = 16.5
+    else:
+        print("I'm sorry, that is an invalid input. Please answer 1 or 2.")
+
 # How many?
+menuAmount = int(input("How many orders would you like? "))
+totalPrice = totalPrice * menuAmount
 
 # Print order confirmation, require Y/N in a loop (sanitize this input)
+userConfirm = input("You would like {0} orders of {1}? ".format(menuAmount, menuOrder)).upper()
+while userConfirm != "Y" and userConfirm != "N":
+    userConfirm = input("Please confirm Y/N: ").upper()
+    if userConfirm != "Y" and userConfirm != "N":
+        print("Invalid input.")
 
-# Ask if student (sanitize this input) and if so apply 10% discount
+# Ask if student Y/N (sanitize this input) and if so apply 10% discount
+userStudent = input("Are you a student? ").upper()
+while userStudent != "Y" and userStudent != "N":
+    print("Invalid input.")
+    userStudent = input("Are you a student? ").upper()
+
+# You know this is kind of a bad discount. It doesn't even cover the sales tax. Who greenlit this?
+studentDiscount = 1.0
+if userStudent == "Y":
+    studentDiscount = totalPrice * .1
+    totalPrice = totalPrice - studentDiscount
 
 # Add sales tax 13%
+salesTax = totalPrice * .13
+totalPrice = totalPrice + salesTax
 
 # Print recipt including: Food ordered, quantity, price, student discount if applicable, sales tax
